@@ -1,68 +1,108 @@
-# Galactic Coin (GC)
+# SpaceToken
 
 ## Overview
 
-Galactic Coin (GC) is an ERC20 token built on the Ethereum blockchain. This contract not only facilitates the minting and burning of tokens but also allows users to purchase virtual planets with their tokens. It utilizes OpenZeppelin's standard libraries for robust security and functionality.
+SpaceToken is an ERC20 token smart contract built on the Ethereum blockchain, designed to facilitate a unique digital asset experience. Users can mint, burn, and transfer Galactic Coins (GC), as well as purchase virtual planets. This project serves as an engaging way to explore the concept of token ownership and trading in a fun, space-themed environment.
 
 ## Features
 
-1. **ERC20 Token Implementation**: Standard ERC20 token functionalities such as transfer, approve, and allowance.
-2. **Ownable**: Ownership control, allowing only the owner to perform specific tasks.
-3. **Minting and Burning**: The owner can mint new tokens, and users can burn their tokens.
-4. **Virtual Planet Purchase**: Users can buy virtual planets using their tokens.
+- **ERC20 Compliance**: Fully compliant with the ERC20 token standard, allowing for seamless integration with wallets and decentralized applications.
+- **Minting**: The owner can mint new tokens to distribute to users as needed.
+- **Burning**: Users can burn their tokens, effectively reducing the total supply.
+- **Planet Purchases**: Users can purchase predefined virtual planets with their tokens.
+- **Ownership Control**: Only the contract owner can mint new tokens and add new planets.
 
-## Installation
+## Getting Started
 
-To use or extend the Galactic Coin contract, follow these steps:
+### Prerequisites
 
-1. Clone the repository.
-2. Install the required dependencies using Node.js and npm.
-3. Compile the contract using Hardhat.
+To deploy and interact with the SpaceToken contract, ensure you have the following:
 
-## Usage
+- [Node.js](https://nodejs.org/en/download/) installed
+- [Truffle](https://www.trufflesuite.com/truffle) or [Hardhat](https://hardhat.org/) for development
+- An Ethereum wallet (e.g., MetaMask) for testing on a testnet or mainnet
+- Access to an Ethereum node (via Infura or Alchemy)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Ragini009/spacetoken.git
+   cd spacetoken
+   ```
+
+2. Install the necessary dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Compile the smart contract:
+
+   ```bash
+   truffle compile
+   ```
 
 ### Deployment
 
-Deploy the contract using Hardhat by creating a deployment script and running it.
+1. Configure your deployment settings in `truffle-config.js` or `hardhat.config.js`.
 
-### Interacting with the Contract
+2. Deploy the contract:
 
-You can interact with the contract using Hardhat, Ethers.js, or any Ethereum-compatible frontend.
+   ```bash
+   truffle migrate --network <your_network>
+   ```
 
-- **Minting Tokens**: Allows the owner to mint new tokens.
-- **Burning Tokens**: Users can burn their tokens.
-- **Adding a Planet**: The owner can add new planets to the system.
-- **Buying a Planet**: Users can buy planets if they have sufficient balance.
+## Contract Functions
 
-## Smart Contract Details
+- **Minting Tokens**: The contract owner can mint new tokens.
+  ```solidity
+  function mint(address to, uint256 amount) public onlyOwner;
+  ```
 
-### Constructor
+- **Burning Tokens**: Users can burn their tokens to decrease the total supply.
+  ```solidity
+  function burn(uint256 amount) public override;
+  ```
 
-Initializes the contract with the name "Galactic Coin" and the symbol "GC". Sets the deployer as the owner.
+- **Transfer Tokens**: Users can transfer tokens to other addresses.
+  ```solidity
+  function transfer(address recipient, uint256 amount) public override returns (bool);
+  ```
 
-### Mint Function
+- **Transfer Tokens From**: Allows the owner to transfer tokens from one address to another.
+  ```solidity
+  function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool);
+  ```
 
-Allows the owner to mint new tokens.
+- **Add New Planet**: The contract owner can add new planets.
+  ```solidity
+  function addPlanet(uint256 planetId, string memory name, uint256 price) public onlyOwner;
+  ```
 
-### Planet Structure
+- **Purchase Planet**: Users can buy planets with their tokens.
+  ```solidity
+  function buyPlanet(uint256 planetId) public;
+  ```
 
-Defines a structure to hold planet information.
-
-### Planet Management
-
-- **Add Planet**: Allows the owner to add new planets to the system.
-- **Buy Planet**: Allows users to buy planets if they have sufficient balance.
+- **Check Planet Ownership**: Users can check if they own a specific planet.
+  ```solidity
+  function hasPurchasedPlanet(address user, uint256 planetId) public view returns (bool);
+  ```
 
 ## Events
 
-### Planet Purchased Event
-
-Emitted when a user purchases a planet.
-
-## Testing
-
-Run tests using Hardhat to ensure the contract functions correctly.
+- **PlanetPurchased**: This event is emitted when a user successfully purchases a planet.
+  ```solidity
+  event PlanetPurchased(address indexed user, uint256 planetId, string planetName);
+  ```
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [OpenZeppelin](https://openzeppelin.com/) for their extensive libraries that simplify smart contract development.
+- The Ethereum community for ongoing support and resources.
