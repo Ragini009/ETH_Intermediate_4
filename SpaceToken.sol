@@ -5,17 +5,36 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract SpaceToken is ERC20, Ownable, ERC20Burnable {
+contract SpaceToken is ERC20, Ownable, ERC20Burnable 
+{
 
-    constructor() ERC20("Galactic Coin", "GC") Ownable(msg.sender) {}
-
-    function mint(address to, uint256 amount) public onlyOwner 
+    constructor() ERC20("Galactic Coin", "GC") Ownable(msg.sender) 
     {
+        addPlanet(1, "Mars", 100);
+        addPlanet(2, "Venus", 150);
+    }
+
+    // Mint new tokens
+    function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-    struct Planet 
-    {
+    // Burn tokens from the caller's account
+    function burn(uint256 amount) public override {
+        super.burn(amount);
+    }
+
+    // Transfer tokens from the caller to a specified address
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        return super.transfer(recipient, amount);
+    }
+
+    // Transfer tokens from a specified address to another specified address (only owner)
+    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
+        return super.transferFrom(sender, recipient, amount);
+    }
+
+    struct Planet {
         string name;
         uint256 price;
     }
